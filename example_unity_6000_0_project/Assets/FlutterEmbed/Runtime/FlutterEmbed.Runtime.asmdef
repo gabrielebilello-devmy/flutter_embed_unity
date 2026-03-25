@@ -1,5 +1,5 @@
 {
-	"name": "FlutterEmbed.Runtime"
+	"name": "FlutterEmbed.Runtime",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
