@@ -1,0 +1,9 @@
+# Ignore changes to URP pipeline assets unless they are explicity staged (git add) 
+# Trivial changes to these files are often made when opening the project because
+# Unity rewrites URP pipeline assets under certain conditions (re-import shaders,
+# re-evaluate URP pipeline defaults, re-run the URP upgrade code path if a package 
+# was updated, cache invalidation etc), resulting in enum numbering (eg 
+# m_PrefilteringModeAdditionalLight changes from 3 to 4). This is annoying, pollutes
+# git commits, and for this simple example project we don't need to track changes
+# to URP settings
+Assets/Settings/URP-*.asset -diff
