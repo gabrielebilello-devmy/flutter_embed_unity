@@ -1,6 +1,8 @@
 ## 2.0.0
 
-### Breaking change for iOS!
+### Breaking changes!
+
+#### Breaking change for iOS
 
 Due to structural changes required to support Swift Package Manager, you now need to add UnityFramework.framework from your exported Unity-iPhone to your Runner target's list of embedded frameworks in Xcode:
 
@@ -11,6 +13,28 @@ Due to structural changes required to support Swift Package Manager, you now nee
 * Click on `+` and choose Workspace -> Unity-iPhone -> UnityFramework.framework
 
 You may also need to run `flutter clean` before rebuilding your project.
+
+#### Breaking change for Android
+
+The flutter_embed_unity_6000_0_android package is now the default implementation for Android, which means you will need to make a change to your app's pubspec.yaml.
+
+If you are targeting Unity 2022.3, you now need to explicitly override the default implementation for android from Unity 6 to Unity 2022.3 by adding flutter_embed_unity_2022_3_android as a dependency:
+
+```yaml
+dependencies:
+  ...
+  flutter_embed_unity: ^2.0.0
+  flutter_embed_unity_2022_3_android: ^1.1.5  # <-- ADD THIS
+```
+
+If you are targeting Unity 6, you will already have an override for flutter_embed_unity_6000_0_android in your app's pubspec. You can now remove it:
+
+```yaml
+dependencies:
+  ...
+  flutter_embed_unity: ^2.0.0
+  # flutter_embed_unity_6000_0_android: ^1.2.3  # <-- This can be removed
+```
 
 ### New features
 
