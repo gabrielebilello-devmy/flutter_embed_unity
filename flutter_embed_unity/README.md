@@ -1,6 +1,6 @@
 # flutter_embed_unity
 
-Embed your [Unity 3D](https://unity.com/) game / app into Flutter apps as a widget on iOS and Android. Transfer messages between Unity scripts and your Flutter app. Only supports a single instance of Unity 2022.3 LTS or Unity 6000.0 LTS. Supports Unity ARFoundation / ARKit / ARCore.
+Embed your [Unity 3D](https://unity.com/) game / app into Flutter apps as a widget on iOS and Android. Transfer messages between Unity scripts and your Flutter app. Only supports a single instance of Unity 2022.3 LTS or Unity 6000.0 / 6000.3 LTS. Supports Unity ARFoundation / ARKit / ARCore.
 
 ![ezgif com-resize](https://github.com/jamesncl/flutter_embed_unity/assets/15979056/e4dd706d-9c0c-4365-8740-d374afa49ebb)
 
@@ -8,25 +8,26 @@ Embed your [Unity 3D](https://unity.com/) game / app into Flutter apps as a widg
 # Usage
 
 
-## For Unity 6000.0 add a dependency for the new Android plugin implementation
+## If you are using Unity 6000.0 / 6000.3 on Android
 
-Currently, the default configuration of the plugin supports Unity 2022.3.
+Currently, the default configuration of the plugin only supports Unity 2022.3 on Android.
 
 If you are using Unity 2022.3 you only need to include the latest **flutter_embed_unity** package in your pubspec.yaml.
 
-If you are using Unity 6000.0 on Android, you must opt-in to use the new implementation for the Android platform by also including the latest **flutter_embed_unity_6000_0_android** package. For example:
+If you are using Unity 6000.0 or 6000.3 LTS on Android, you must opt-in to use the new implementation for the Android platform by also including the latest **flutter_embed_unity_6000_0_android** package in your pubspec.yaml. For example:
 
 ```yaml
 dependencies:
   ...
-  flutter_embed_unity: ^1.3.1  # (replace this version with the latest available)
-  # Add this for Unity 6000.0 support on Android:
-  flutter_embed_unity_6000_0_android: ^1.2.2  # (replace this version with the latest available)
+  flutter_embed_unity: ^2.0.0  # (replace this version with the latest available)
+  # Add this for Unity 6000.0 / 6000.3 support on Android:
+  flutter_embed_unity_6000_0_android: ^1.2.3  # (replace this version with the latest available)
 ```
 
 For iOS only, you do not need to add any additional dependency - the default implementation for iOS is compatible with both versions of Unity.
 
-> In future versions, Unity 6000.0 support will become the default, and you will have to opt-out by including flutter_embed_unity_2022_3_android in your pubspec.yaml
+> [!IMPORTANT]
+> In future versions, Unity 6 support will become the default, and you will have to opt-out of using the Unity 6 implementation by including flutter_embed_unity_2022_3_android in your pubspec.yaml
 
 
 ## Using the EmbedUnity widget
@@ -43,9 +44,10 @@ void main() {
       body: Column(
         children: [
           Expanded(
+            // This will render your Unity project
             child: EmbedUnity(
               onMessageFromUnity: (String message) {
-                // Receive message from Unity
+                // Receive message from Unity scripts here
               },
             ),
           ),
@@ -96,14 +98,14 @@ There is [an example Unity 2022.3 project](https://github.com/learntoflutter/flu
 # Limitations
 
 
-## Only supports certain versions of Unity 2022.3 LTS and Unity 6000.0 LTS
+## Unity version support
 
 > [!IMPORTANT]
-> It is **very important that you only use the Unity versions listed below**. Failure to do this will likely lead to crashes at runtime, because the undocumented functions this plugin calls can change and the workarounds it implements may not work as expected.
+> It is important that you only use the Unity versions listed below. Failure to do this will likely lead to crashes at runtime, because the undocumented functions this plugin calls can change and the workarounds it implements may not work as expected.
 
 
-### Unity 6000.0 LTS
-* For Android, version 6000.0.58f2 or newer is required due to a [security update advisory](https://unity.com/security/sept-2025-01).
+### Unity 6000.0 / 6000.3 LTS
+* For Android, version 6000.3.0f1 or newer or 6000.0.58f2 or newer is required due to a [security update advisory](https://unity.com/security/sept-2025-01).
 
   <details>
   <summary>Superseded version requirements. (click to expand)</summary>
@@ -128,7 +130,7 @@ There is [an example Unity 2022.3 project](https://github.com/learntoflutter/flu
   See [this announcement from Unity](https://discussions.unity.com/t/info-unity-engine-support-for-16-kb-memory-page-sizes-android-15/1589588) for more information.
 </details>
 
-[Unity as a library](https://docs.unity3d.com/Manual/UnityasaLibrary.html) was only intended by Unity to be used fullscreen (running in it's own `UnityPlayerActivity.java` Activity on Android, or using `UnityAppController.mm` as the root UIViewController on iOS). By embedding Unity into a Flutter widget, this plugin breaks this assumption, making it quite delicate. It also calls undocumented functions written by Unity, and implements various workarounds, which is why this plugin will not work with different versions of Unity. If you need support for different versions, this package is [federated](https://docs.flutter.dev/packages-and-plugins/developing-packages#federated-plugins) to allow easier extension by contributors for different versions of Unity using alternate platform packages - [consult the wiki for help developing and contributing your own.](https://github.com/learntoflutter/flutter_embed_unity/wiki).
+[Unity as a library](https://docs.unity3d.com/Manual/UnityasaLibrary.html) was only intended by Unity to be used fullscreen (running in it's own `UnityPlayerActivity.java` Activity on Android, or using `UnityAppController.mm` as the root UIViewController on iOS). By embedding Unity into a Flutter widget, this plugin breaks this assumption, making it quite delicate. It also calls undocumented functions written by Unity, and implements various workarounds, which is why this plugin may not work with different versions of Unity. If you need support for different versions, this package is [federated](https://docs.flutter.dev/packages-and-plugins/developing-packages#federated-plugins) to allow easier extension by contributors for different versions of Unity using alternate platform packages - [consult the wiki for help developing and contributing your own.](https://github.com/learntoflutter/flutter_embed_unity/wiki)
 
 
 ## Only supports Flutter 3.3.x, 3.7.x, 3.10.x, 3.13.x, 3.22.x or later
@@ -140,6 +142,8 @@ Due to various issues in Flutter support for native platform views, only certain
 * [Flutter #142952: Virtual display - Buggy resize with Android 12+](https://github.com/flutter/flutter/issues/142952) (affects Flutter 3.19.x)
 
 This is being tracked in [#12](https://github.com/learntoflutter/flutter_embed_unity/issues/12) and [#14](https://github.com/learntoflutter/flutter_embed_unity/issues/14) (many thanks to [@timbotimbo](https://github.com/timbotimbo))
+
+Upcoming versions may only support Flutter 3.38 and newer due to [changes to iOS UIScene lifecycle requirements](https://docs.flutter.dev/release/breaking-changes/uiscenedelegate#migration-guide-for-flutter-plugins), this is being tracked in [#71](https://github.com/learntoflutter/flutter_embed_unity/issues/71)
 
 
 ## Known issues with AR when using Flutter 3.22 or later, and Android API 32 (version 12 / Snow Cone) or earlier
@@ -165,7 +169,7 @@ Officially, [Unity is tested against the following dependencies](https://docs.un
 | 2022.3.38f1+                      | 7.5.1           | 7.4.2                          | r23b (23.1.7779620)  | 11  |
 | 2022.3.0f1 - 2022.3.37f1          | 7.2             | 7.1.2                          | r23b (23.1.7779620)  | 11  |
 
-Anecdotal evidence suggests that it works well with projects compiled with different versions of gradle, AGP, NDK and JDK, however you should test thoroughly. There is [some guidance in the wiki on what combinations of versions may work](https://github.com/learntoflutter/flutter_embed_unity/wiki#android-only-choose-a-combination-of-gradle-agp-jdk-and-android-studio-which-works-for-you).
+Anecdotal evidence suggests that it works with projects compiled with different versions of gradle, AGP, NDK and JDK, however you should test thoroughly. There is [some guidance in the wiki on what combinations of versions may work](https://github.com/learntoflutter/flutter_embed_unity/wiki#android-only-choose-a-combination-of-gradle-agp-jdk-and-android-studio-which-works-for-you).
 
 Alternatively, you may want to investigate AAR compilation, which may be a solution if you are encountering too many version conflicts.
 
@@ -190,11 +194,17 @@ Failure to do this will mean your app will crash on orientation change. See [the
 
 ## Limited support for Simulators
 
-Android similators appear to work well on an Apple development machine with Apple Silicon. Other similator setups may not work due to architecture mismatches between the Unity export and your development machine. You may be able to work around these issues by experimenting with the 'Target architectures' setting (for Android) and 'Target SDK' setting (for iOS) in Unity's Player Settings.
+Android and iOS similators appear to work well on Macs with Apple Silicon. 
+
+For iOS simulator, when exporting your Unity project (see below) to embed into your Flutter app to run in a simulator, you will need to go into Player Settings -> Other settings -> Configuration and set *Target SDK* to `Simulator SDK` and *Simulator architecture* to `Universal`. Remember to set back to Device SDK when running on real devices.
+
+Simulators are not supported when using AR/XR in Unity.
+
+Other similator setups may not work due to architecture mismatches between the Unity export and your development machine. You may be able to work around these issues by experimenting with the 'Target architectures' setting (for Android) and 'Target SDK' setting (for iOS) in Unity's Player Settings.
 
 
 ## Alternatives
-If you need to support other versions of unity, consider using [flutter_unity_widget](https://pub.dev/packages/flutter_unity_widget) or [consult the Wiki](https://github.com/learntoflutter/flutter_embed_unity/wiki) for pointers on how to contribute your own packages targeting different versions of Unity
+If you need to support other versions of unity, consider using [flutter_unity_widget](https://pub.dev/packages/flutter_unity_widget) or [consult the Wiki](https://github.com/learntoflutter/flutter_embed_unity/wiki) for instructions on how to create your own platform-specific sub-package to this federated package to target different versions of Unity.
 
 Flutter Forward 2023 demonstrated [an early preview of 3D support directly in Dart using Impeller](https://www.youtube.com/watch?v=zKQYGKAe5W8&t=7067s&ab_channel=Flutter). If you need only basic 3D rendering, this may be a better alternative.
 
@@ -204,7 +214,7 @@ Flutter Forward 2023 demonstrated [an early preview of 3D support directly in Da
 
 ## Configure Unity
 
-- Install [the latest Unity 2022.3 LTS or 6000.0 LTS](https://unity.com/releases/editor/archive)
+- Install [the latest Unity 2022.3 LTS, 6000.0 LTS or 6000.3 LTS](https://unity.com/releases/editor/archive)
 - Either open an existing Unity project (it must be configured to use [the Universal Render Pipeline](https://docs.unity3d.com/Manual/universal-render-pipeline.html)), or create a new one using the `3D (URP) Core` template
 - In Unity, make sure to select the appropriate build platform: go to `File -> Build Settings` (Unity 2022.3) or `File -> Build Profiles` (Unity 6) and select either Android or iOS, then click `Switch Platform`
 - In Unity, go to `File -> Build Settings / Build Profile -> Player Settings -> Other settings`, and make the following changes:
@@ -332,11 +342,22 @@ The Unity project is now ready to use, but we still haven't actually linked it t
 
 - In Xcode, open your app's `<your flutter project>/ios/Runner.xcworkspace`. It's **very important** to make sure you are opening the `xcworkspace` and not the `xcproj`: [workspaces](https://developer.apple.com/documentation/xcode/managing-multiple-projects-and-their-dependencies) are designed for combining multiple projects (in this case, the Runner project for your Flutter app and the exported Unity project)
 - In the project navigator, make sure nothing is selected
-- From Xcode toolbar, select `File -> Add files to "Runner"` and select `<your flutter project>/ios/UnityLibrary/Unity-Iphone.xcodeproj`. This should add the Unity-iPhone project to your workspace at the same level as the Runner and Pods projects (if you accidentally added it as a child of Runner, right-click Unity-iPhone, choose Delete, then choose Remove Reference. Then *make sure nothing is selected* and try again). Alternatively, you can drag-and-drop Unity-Iphone.xcodeproj into the project navigator, again ensuring that you drop it at the root of the tree (at the same level as Runner and Pods)
+- From Xcode toolbar, select `File -> Add files to "Runner"` and select `<your flutter project>/ios/UnityLibrary/Unity-Iphone.xcodeproj`. This should add the Unity-iPhone project to your workspace at the same level as the Runner and Pods projects.
 
 ![2](https://github.com/jamesncl/flutter_embed_unity/assets/15979056/ca369db9-1991-4093-8713-5e68b0ddac17)
 
-- In `<your flutter app>/ios/Podfile` make sure the ios platform requirement is at least [the minimum required by Unity](https://docs.unity3d.com/Manual/ios-requirements-and-compatibility.html):
+- In Xcode, select Runner in the project explorer, then under `Targets` select Runner, and open the General tab. Scroll down to *Frameworks, Libraries and Embedded Content*:
+
+<TODO - insert screenshot>
+
+  Click `+` and select Workspace -> Unity-iPhone -> UnityFramework.framework. Leave the Embed option as the default `Embed & Sign`.
+
+<TODO - insert screenshot>
+
+> [!NOTE]
+> Adding UnityFramework.framework as an embedded framework is only required for version 2.0.0 and later of the flutter_embed_unity package. If you are using an earlier version, leave this step out.
+
+- If you are using Cocoapods to build your Flutter project, in `<your flutter app>/ios/Podfile` make sure the ios platform requirement is at least [the minimum required by Unity](https://docs.unity3d.com/Manual/ios-requirements-and-compatibility.html):
 
 ```ruby
 # Unity 2022.3 requires iOS 12+, Unity 6000.0 requires iOS 13+
@@ -776,6 +797,19 @@ See [the Wiki](https://github.com/learntoflutter/flutter_embed_unity/wiki/Advanc
 
 # Common issues
 
+## Swift Compiler Error (Xcode): Unable to find module dependency: 'UnityFramework'
+
+If you have recently upgraded flutter_embed_unity from version 1.x to 2.x make sure to read the breaking change notes [in the change log](https://pub.dev/packages/flutter_embed_unity/changelog). Version 2.x now requires UnityFramework.framework from your Unity-iPhone project to be embedded into your Runner target in Xcode. See the iOS setup instructions above to see how to do this. You may need to also run `flutter clean` before rebuilding.
+
+## dyld: Library not loaded: @rpath/UnityFramework.framework/UnityFramework (no such file)
+
+Same as above
+
+## Error (Xcode): Multiple commands produce '.../UnityFramework.framework'
+
+If you are using a version of flutter_embed_unity prior to 2.x, check to make sure you have NOT embedded the UnityFramework.framework into your app's Runner target in Xcode. Version 1.x does not require this, and in fact will cause this error if you do. To check, go to Xcode, select Runner in the project navigator, then select the Runner target in the editor window. Select the General tab and scroll down to Frameworks, Libraries & Embedded Content. If you have UnityFramework.framework in the list, and you are using a version of flutter_embed_unity prior to 2.x, remove it. You may need to also run `flutter clean` before rebuilding.
+
+
 ## Export incomplete: AndroidManifest.xml not found
 
 There is [an issue with some versions of Unity 2022.3](https://issuetracker.unity3d.com/issues/android-xr-xr-management-package-equals-4-dot-3-1-deletes-unitylibrary-androidmanifest-dot-xml-when-exporting-a-gradle-build) which causes the following error when attempting to export the project using the plugin export script with AR packages enabled:
@@ -824,13 +858,6 @@ See the Limitations section above for instructions on how to set the correct gra
 ## Could not find :arcore_client: / :ARPresto: / :UnityARCore: etc.
 
 Check you have followed the instructions about linking Unity to your Android project. Specifically, make sure you have added the unityLibrary flatDir to the correct place in you `build.gradle` (it goes under the `allprojects` section, not the `buildscript` section).
-
-
-## Error (Xcode): Multiple commands produce '.../build/ios/Debug-iphoneos/Runner.app/Frameworks/UnityFramework.framework'
-
-This is probably because you have migrated from using the flutter_unity_widget package, where you have to embed & sign UnityFramework.framework into your Runner app. This package includes UnityFramework.framework as part of the plugin, so this step isn't needed, and in fact will mean you end up with UnityFramework twice.
-
-To resolve this, in Xcode, select Runner in the project navigator, then select the Runner target in the editor window. Select the General tab and scroll down to Frameworks, Libraries & Embedded Content. If you have UnityFramework.framework in the list, remove it.
 
 
 ## IL2CPP C++ code builder is unable to build C++ code. In order to build C++ code for Mac, you must have Xcode installed.
