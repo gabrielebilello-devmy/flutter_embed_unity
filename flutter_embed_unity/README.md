@@ -348,11 +348,13 @@ The Unity project is now ready to use, but we still haven't actually linked it t
 
 - In Xcode, select Runner in the project explorer, then under `Targets` select Runner, and open the General tab. Scroll down to *Frameworks, Libraries and Embedded Content*:
 
-<TODO - insert screenshot>
+<img width="858" height="555" alt="Screenshot 2026-03-26 at 14 17 56" src="https://github.com/user-attachments/assets/d87695ed-8112-4c3f-b2d3-168877c93680" />
+
 
   Click `+` and select Workspace -> Unity-iPhone -> UnityFramework.framework. Leave the Embed option as the default `Embed & Sign`.
 
-<TODO - insert screenshot>
+<img width="349" height="405" alt="Screenshot 2026-03-26 at 14 19 17" src="https://github.com/user-attachments/assets/7bcc1de3-5dec-4bd8-99df-dbb29f5163a0" />
+
 
 > [!NOTE]
 > Adding UnityFramework.framework as an embedded framework is only required for version 2.0.0 and later of the flutter_embed_unity package. If you are using an earlier version, leave this step out.
