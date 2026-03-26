@@ -825,6 +825,16 @@ Same as above
 If you are using a version of flutter_embed_unity prior to 2.x, check to make sure you have NOT embedded the UnityFramework.framework into your app's Runner target in Xcode. Version 1.x does not require this, and in fact will cause this error if you do. To check, go to Xcode, select Runner in the project navigator, then select the Runner target in the editor window. Select the General tab and scroll down to Frameworks, Libraries & Embedded Content. If you have UnityFramework.framework in the list, and you are using a version of flutter_embed_unity prior to 2.x, remove it. You may need to also run `flutter clean` before rebuilding.
 
 
+## Cycle inside Runner; building could produce unreliable results
+
+In some circumstances you may run into this Xcode build error when building for iOS. This might be caused when you embed the UnityFramework.framework into your app's build. The following might fix this:
+
+* In Xcode, select Runner in the project navigator
+* Under Targets, select Runner
+* Go to the Build Phases tab
+* Find the Thin Binary build phase. If this is not the last build phase in the list, drag it to the bottom so that it runs after the Embed Frameworks build phase
+
+
 ## Export incomplete: AndroidManifest.xml not found
 
 There is [an issue with some versions of Unity 2022.3](https://issuetracker.unity3d.com/issues/android-xr-xr-management-package-equals-4-dot-3-1-deletes-unitylibrary-androidmanifest-dot-xml-when-exporting-a-gradle-build) which causes the following error when attempting to export the project using the plugin export script with AR packages enabled:
