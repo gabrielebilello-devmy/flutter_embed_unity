@@ -236,11 +236,14 @@ Flutter Forward 2023 demonstrated [an early preview of 3D support directly in Da
 
 To allow Unity to send messages to Flutter, and to make exporting your Unity project into Flutter easier, this plugin includes some Unity scripts which you should import into your Unity project.
 
+There are a few different ways you can import these scripts:
+
+### Import a .unitypackage file
+
 - Go to [the releases for this plugin on Github](https://github.com/learntoflutter/flutter_embed_unity/releases) and find the version of this plugin you are using (the version you [add to your `pubspec.yaml`](https://pub.dev/packages/flutter_embed_unity/install))
-- Expand `Assets` and download the file `flutter_embed_unity_2022_3.unitypackage` for Unity 2022.3 or `flutter_embed_unity_6000_0.unitypackage` for Unity 6000.0.
+- Expand `Assets` and download the file `flutter_embed_unity_2022_3.unitypackage` for Unity 2022.3 or `flutter_embed_unity_6000_0.unitypackage` for Unity 6000.0 / 6000.3.
 
 ![Screenshot 2025-05-29 at 12 11 39](https://github.com/user-attachments/assets/063d2825-0d18-4fe3-a0bf-2d198c18187f)
-
 
 - In Unity, go to `Assets -> import package -> Custom package`, and choose the file you just downloaded
 - The package includes two folders: `FlutterEmbed` which contains scripts which are REQUIRED to run the plugin, and `Example` which contains an optional example scene and AR scene which demonstrates how to use the plugin (this includes dependencies on ARFoundation - if you don't need the example you can untick these from the import package selection).
@@ -248,8 +251,18 @@ To allow Unity to send messages to Flutter, and to make exporting your Unity pro
 ![import](https://github.com/jamesncl/flutter_embed_unity/assets/15979056/3641f1a2-8fb3-40cf-9a16-bfca9919e214)
 
 
-> [!NOTE]
-> As an alternative to importing these unitypackages, you can browse the source which this package is made from in [the example Unity 2022.3 project](https://github.com/learntoflutter/flutter_embed_unity/tree/main/example_unity_2022_3_project) or [the example Unity 6000.0 project](https://github.com/learntoflutter/flutter_embed_unity/tree/main/example_unity_6000_0_project), or use the example project as a template for your own project.
+### Use Unity Package Manager to import from Git URL
+
+- In Unity, open Package Manager, click the `+` button and choose 'Install package from Git URL...'
+- Enter one of:
+  - For Unity 2022.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_2022_3_project/Assets/FlutterEmbed`
+  - For Unity 6000.0 / 6000.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_6000_0_project/Assets/FlutterEmbed`
+
+The scripts will be added to your project under Packages -> Flutter Embed Unity.
+
+### Copy directly from the example Unity projects
+
+Alternatively you can browse the source in [the example Unity 2022.3 project](https://github.com/learntoflutter/flutter_embed_unity/tree/main/example_unity_2022_3_project) or [the example Unity 6000.0 project](https://github.com/learntoflutter/flutter_embed_unity/tree/main/example_unity_6000_0_project), and copy the scripts from the EmbedUnity asset folder into your Unity project, or use the example project as a starting template for a new Unity project.
 
 
 ## Setup messaging in Unity
