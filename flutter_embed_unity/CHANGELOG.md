@@ -25,6 +25,15 @@ You may also need to run `flutter clean` before rebuilding your project.
 * Bump flutter_embed_unity_2022_3_ios to 2.0.0
 
 
+## 1.5.0
+
+26 March 2026
+
+* Bug fix: Removed flutter_embed_unity_6000_0_android from the list of default / officially endorsed implementations in the package pubspec.yaml. 
+
+Having both flutter_embed_unity_2022_3_android and flutter_embed_unity_6000_0_android caused build conflicts in certain scenarios (see [#54](https://github.com/learntoflutter/flutter_embed_unity/issues/54)). Users who were not affected by these issues should not notice any change, and no modifications are needed to your app pubspec: if you are targeting Unity 6, you should already have flutter_embed_unity_6000_0_android added to your app's pubspec.yaml. If you experience build errors after upgrading to this version please [report them](https://github.com/learntoflutter/flutter_embed_unity/issues).
+
+
 ## 1.4.0
 
 27 Sep 2025
