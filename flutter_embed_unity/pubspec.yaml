@@ -18,8 +18,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_embed_unity_platform_interface: ^1.0.1
+  # Only include 1 officially endorsed implementation for each platform!
+  # Including multiple implementations can lead to some hard to debug problems
+  # See https://github.com/learntoflutter/flutter_embed_unity/issues/54
+  # e.g. only include either flutter_embed_unity_2022_3_android OR flutter_embed_unity_6000_0_android
+  # The user can then override the default with a different implementation in their app's pubspec
   flutter_embed_unity_2022_3_android: ^1.1.5
-  flutter_embed_unity_6000_0_android: ^1.2.3
   flutter_embed_unity_2022_3_ios: ^1.0.2
 
 dev_dependencies:
