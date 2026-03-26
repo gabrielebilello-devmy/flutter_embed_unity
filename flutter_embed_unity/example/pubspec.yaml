@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_embed_unity: ^1.4.0
+  flutter_embed_unity: ^1.5.0
   intl: any
 
 
