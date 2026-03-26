@@ -1,3 +1,30 @@
+## 2.0.0
+
+### Breaking change for iOS!
+
+Due to structural changes required to support Swift Package Manager, you now need to add UnityFramework.framework from your exported Unity-iPhone to your Runner target's list of embedded frameworks in Xcode:
+
+* In Xcode, open `<your project root>/ios/Runner.xcworkspace`
+* Select 'Runner' in the project navigator
+* Under Targets, select 'Runner'
+* In the General tab, scroll down to 'Frameworks, Libraries, and Embedded Content'
+* Click on `+` and choose Workspace -> Unity-iPhone -> UnityFramework.framework
+
+You may also need to run `flutter clean` before rebuilding your project.
+
+### New features
+
+* Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity)
+* Support for installing required Unity scripts as a Unity Package Manager package via Git URL (see [Unity docs](https://docs.unity3d.com/6000.3/Documentation/Manual/upm-ui-giturl.html)):
+  * For Unity 2022.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_2022_3_project/Assets/FlutterEmbed`
+  * For Unity 6000.0 / 6000.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_6000_0_project/Assets/FlutterEmbed`
+
+### Other changes
+
+* Example Unity 6 project updated to Unity 6000.3.11f1
+* Bump flutter_embed_unity_2022_3_ios to 2.0.0
+
+
 ## 1.4.0
 
 27 Sep 2025
