@@ -16,6 +16,10 @@ You may also need to run `flutter clean` before rebuilding your project.
 
 * Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity)
 
+### Other
+
+* Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. See [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
+
 
 ## 1.0.2
 

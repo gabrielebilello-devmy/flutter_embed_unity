@@ -38,24 +38,26 @@ dependencies:
 
 ### New features
 
-* Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity)
-* Support for installing required Unity scripts as a Unity Package Manager package via Git URL (see [Unity docs](https://docs.unity3d.com/6000.3/Documentation/Manual/upm-ui-giturl.html)):
+* Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity) (thanks [@timbotimbo](https://github.com/timbotimbo)). Closes [#29](https://github.com/learntoflutter/flutter_embed_unity/issues/29)
+* Support for installing required Unity scripts as a Unity Package Manager package via Git URL (thanks [@timbotimbo](https://github.com/timbotimbo)). See [Unity docs](https://docs.unity3d.com/6000.3/Documentation/Manual/upm-ui-giturl.html):
   * For Unity 2022.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_2022_3_project/Assets/FlutterEmbed`
   * For Unity 6000.0 / 6000.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_6000_0_project/Assets/FlutterEmbed`
 
 ### Other changes
 
+* Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. Fixes [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
 * Example Unity 6 project updated to Unity 6000.3.11f1
-* Bump flutter_embed_unity_2022_3_ios to 2.0.0
+* Bump iOS and Android platform package dependencies to 2.0.0
+* Increased Android minSdk to 25 in example app, which is required for Unity 6000.3
 
 
 ## 1.5.0
 
 26 March 2026
 
-* Bug fix: Removed flutter_embed_unity_6000_0_android from the list of default / officially endorsed implementations in the package pubspec.yaml. 
+* Bug fix: Removed flutter_embed_unity_6000_0_android from the list of default / officially endorsed implementations in the package pubspec.yaml. Fixes [#54](https://github.com/learntoflutter/flutter_embed_unity/issues/54)
 
-Having both flutter_embed_unity_2022_3_android and flutter_embed_unity_6000_0_android caused build conflicts in certain scenarios (see [#54](https://github.com/learntoflutter/flutter_embed_unity/issues/54)). Users who were not affected by these issues should not notice any change, and no modifications are needed to your app pubspec: if you are targeting Unity 6, you should already have flutter_embed_unity_6000_0_android added to your app's pubspec.yaml. If you experience build errors after upgrading to this version please [report them](https://github.com/learntoflutter/flutter_embed_unity/issues).
+Having both flutter_embed_unity_2022_3_android and flutter_embed_unity_6000_0_android caused build conflicts in certain scenarios. Users who were not affected by these issues should not notice any change, and no modifications are needed to your app pubspec: if you are targeting Unity 6, you should already have flutter_embed_unity_6000_0_android added to your app's pubspec.yaml. If you experience build errors after upgrading to this version please [report them](https://github.com/learntoflutter/flutter_embed_unity/issues).
 
 
 ## 1.4.0

@@ -1,3 +1,8 @@
+## 2.0.0
+
+* Increased minimum Flutter version to 3.35 for consistency with iOS requirements due to [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
+
+
 ## 1.1.5
 
 27 Sep 2025

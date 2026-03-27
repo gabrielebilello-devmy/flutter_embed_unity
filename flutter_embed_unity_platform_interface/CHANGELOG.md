@@ -1,3 +1,9 @@
+## 2.0.0
+
+* Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. See [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
+* Bumped plugin_platform_interface dependency to 2.1.8
+
+
 ## 1.0.1
 
 31 July 2024

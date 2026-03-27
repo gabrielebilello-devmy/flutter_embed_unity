@@ -11,13 +11,13 @@ topics:
   - unity
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
-  flutter: ">=3.24.0" # 3.24 is minimum for SPM support
+  sdk: '>=3.9.0 <4.0.0'
+  flutter: ">=3.35.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_embed_unity_platform_interface: ^1.0.1
+  flutter_embed_unity_platform_interface: ^2.0.0
 
 dev_dependencies:
   flutter_test:

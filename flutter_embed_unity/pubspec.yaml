@@ -11,19 +11,19 @@ topics:
   - unity
 
 environment:
-  sdk: '>=2.18.0 <4.0.0'
-  flutter: ">=3.3.0"
+  sdk: '>=3.9.0 <4.0.0'
+  flutter: ">=3.35.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_embed_unity_platform_interface: ^1.0.1
+  flutter_embed_unity_platform_interface: ^2.0.0
   # Only include 1 officially endorsed implementation for each platform!
   # Including multiple implementations can lead to some hard to debug problems
   # See https://github.com/learntoflutter/flutter_embed_unity/issues/54
   # e.g. only include either flutter_embed_unity_2022_3_android OR flutter_embed_unity_6000_0_android
   # The user can then override the default with a different implementation in their app's pubspec
-  flutter_embed_unity_6000_0_android: ^1.2.3
+  flutter_embed_unity_6000_0_android: ^2.0.0
   # flutter_embed_unity_2022_3_ios works for both Unity 2022.3 and Unity 6
   flutter_embed_unity_2022_3_ios: ^2.0.0
 
