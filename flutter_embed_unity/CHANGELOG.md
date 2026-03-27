@@ -47,7 +47,7 @@ dependencies:
 
 * Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. Fixes [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
 * Example Unity 6 project updated to Unity 6000.3.11f1
-* Bump iOS and Android platform package dependencies to 2.0.0
+* Bump all platform implementation package and platform interface dependencies to 2.0.0
 * Increased Android minSdk to 25 in example app, which is required for Unity 6000.3
 
 
