@@ -34,6 +34,6 @@ flutter:
   plugin:
     platforms:
       android:
-        default_package: flutter_embed_unity_2022_3_android
+        default_package: flutter_embed_unity_6000_0_android
       ios:
         default_package: flutter_embed_unity_2022_3_ios
