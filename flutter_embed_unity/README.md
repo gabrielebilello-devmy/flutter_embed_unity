@@ -372,6 +372,10 @@ The Unity project is now ready to use, but we still haven't actually linked it t
 > [!NOTE]
 > Adding UnityFramework.framework as an embedded framework is only required for version 2.0.0 and later of the flutter_embed_unity package. If you are using an earlier version, leave this step out.
 
+
+- In Xcode, select Runner in the project explorer, then under `Targets` select Runner, and open the Build Phases tab. Drag the Thin Binary build phase to the bottom, so that it's below the Embed Frameworks build phase. This is to avoid a build cycle error `Cycle inside Runner; building could produce unreliable results` when building in Xcode.
+
+
 - If you are using Cocoapods to build your Flutter project, in `<your flutter app>/ios/Podfile` make sure the ios platform requirement is at least [the minimum required by Unity](https://docs.unity3d.com/Manual/ios-requirements-and-compatibility.html):
 
 ```ruby
@@ -825,9 +829,9 @@ Same as above
 If you are using a version of flutter_embed_unity prior to 2.x, check to make sure you have NOT embedded the UnityFramework.framework into your app's Runner target in Xcode. Version 1.x does not require this, and in fact will cause this error if you do. To check, go to Xcode, select Runner in the project navigator, then select the Runner target in the editor window. Select the General tab and scroll down to Frameworks, Libraries & Embedded Content. If you have UnityFramework.framework in the list, and you are using a version of flutter_embed_unity prior to 2.x, remove it. You may need to also run `flutter clean` before rebuilding.
 
 
-## Cycle inside Runner; building could produce unreliable results
+## Error (Xcode): Cycle inside Runner; building could produce unreliable results
 
-In some circumstances you may run into this Xcode build error when building for iOS. This might be caused when you embed the UnityFramework.framework into your app's build. The following might fix this:
+After adding UnityFramework.framework to Targets -> Runner -> General -> Frameworks, Libraries and Embedded Content, you may run into this Xcode build error when building for iOS. The following should fix this:
 
 * In Xcode, select Runner in the project navigator
 * Under Targets, select Runner
