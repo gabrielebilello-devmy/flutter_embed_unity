@@ -14,17 +14,17 @@ body:
       description: Please search to see if an issue already exists for the bug you encountered.
       options:
         - label: I have searched the existing issues
-  - type: dropdown
+  - type: checkboxes
     id: unityversion
     attributes:
-      label: Unity version
-      description: As per the [README](https://github.com/jamesncl/flutter_embed_unity/blob/main/flutter_embed_unity/README.md) this plugin ONLY supports Unity 2022.3 LTS and Unity 6000.0 LTS. Using different versions is out of the scope of this package and will not be considered for issues.
+      label: Unity version(s)
+      description: As per the [README](https://github.com/jamesncl/flutter_embed_unity/blob/main/flutter_embed_unity/README.md) this plugin ONLY supports Unity 2022.3 LTS, Unity 6000.0 LTS and 6000.3 LTS. Using different versions is out of the scope of this package and will not be considered for issues.
       options:
-        - Unity 2022.3 LTS
-        - Unity 6000.0 LTS
-      default: 0
+        - label: Unity 2022.3 LTS
+        - label: Unity 6000.0 LTS
+        - label: Unity 6000.3 LTS
     validations:
-      required: false
+      required: true
   - type: checkboxes
     id: commonissues
     attributes:
@@ -38,7 +38,7 @@ body:
     attributes:
       label: Flutter version
       description: What version of Flutter are you using?
-      placeholder: eg 3.13.1
+      placeholder: eg 3.24.0
     validations:
       required: true
   - type: textarea
