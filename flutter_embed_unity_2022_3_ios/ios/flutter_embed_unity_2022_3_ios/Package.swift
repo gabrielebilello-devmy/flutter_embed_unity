@@ -39,6 +39,18 @@ let package = Package(
                 // If you have other resources that need to be bundled with your plugin, refer to
                 // the following instructions to add them:
                 // https://developer.apple.com/documentation/xcode/bundling-resources-with-a-swift-package
+            ],
+            linkerSettings: [
+                // This prevents SPM from stripping the FlutterEmbedUnityIos_sendToFlutter function
+                // (see SendToFlutteer.swift) because it isn't referenced anywhere in the Swift
+                // package (it is referenced only in the Unity C# script). Without this, you will
+                // get a runtime crash *only in a signed / archived version* of the app build
+                // and only when using Flutter's Swift Package Manager integration:
+                // symbol not found in flat namespace '_FlutterEmbedUnityIos_sendToFlutter'
+                .unsafeFlags([
+                    "-Xlinker", "-u",
+                    "-Xlinker", "_FlutterEmbedUnityIos_sendToFlutter",
+                ])
             ]
         ),
         .binaryTarget(
