@@ -12,7 +12,7 @@ Due to structural changes required to support Swift Package Manager, you now nee
 * In the General tab, scroll down to 'Frameworks, Libraries, and Embedded Content'
 * Click on `+` and choose Workspace -> Unity-iPhone -> UnityFramework.framework
 
-After adding UnityFramework.framework, you may encounter a build error `Cycle inside Runner; building could produce unreliable results`. To solve this, in Xcode, again select the Runner target, and go to the Build phases tab. Drag the Thin Binary build phase to the bottom of the list until it is below the Embed Frameworks build phase.
+After adding UnityFramework.framework, you may encounter a build error `Cycle inside Runner; building could produce unreliable results`. To solve this, in Xcode, again select the Runner target, and go to the Build phases tab. Drag the Thin Binary build phase downwards until it is below the Embed Frameworks build phase. If this does not resolve the issue, look for any custom Run Script phases which contain variables pointing to paths in the final built product (eg $TARGET_BUILD_DIR) and move them down also.
 
 You may also need to run `flutter clean` before rebuilding your project.
 

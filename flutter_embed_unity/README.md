@@ -831,12 +831,18 @@ If you are using a version of flutter_embed_unity prior to 2.x, check to make su
 
 ## Error (Xcode): Cycle inside Runner; building could produce unreliable results
 
-After adding UnityFramework.framework to Targets -> Runner -> General -> Frameworks, Libraries and Embedded Content, you may run into this Xcode build error when building for iOS. The following should fix this:
+After adding UnityFramework.framework to Targets -> Runner -> General -> Frameworks, Libraries and Embedded Content, you may run into this Xcode build error when building for iOS.
+
+The problem is most likely caused by the fact that that flutter’s Thin Binary build phase in Xcode reads and rewrites the final built app binary, which is only produced after all frameworks — including UnityFramework.framework — have been copied into the app bundle. However, because the Thin Binary is also listed as part of the Runner build process, Runner’s build is considered to depend on that script, creating a dependency loop (Copy UnityFramework -> Thin Binary -> Build final app -> Copy UnityFramework)
+
+The following will likely fix this:
 
 * In Xcode, select Runner in the project navigator
 * Under Targets, select Runner
 * Go to the Build Phases tab
-* Find the Thin Binary build phase. If this is not the last build phase in the list, drag it to the bottom so that it runs after the Embed Frameworks build phase
+* Find the Thin Binary build phase. Drag it downwards until it is below the Embed Frameworks build phase
+
+If the above does not fix the issue, check if you have any custom Run Script build phases which may also be implicitly referencing the final built product. For example, any script which references variables which point to the final built product path, such as $TARGET_BUILD_DIR, $FULL_PRODUCT_NAME, $DWARF_DSYM_FOLDER_PATH, $WRAPPER_NAME, $WRAPPER_EXTENSION, $CODESIGNING_FOLDER_PATH, $BUILT_PRODUCTS_DIR, $CONTENTS_FOLDER_PATH etc could trigger this build cycle.
 
 
 ## Export incomplete: AndroidManifest.xml not found
