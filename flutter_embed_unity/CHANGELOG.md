@@ -1,4 +1,6 @@
-## 2.0.0
+## 2.0.0-dev.1
+
+UNSTABLE dev release, not for use in production. See [#74](https://github.com/learntoflutter/flutter_embed_unity/issues/74)
 
 ### Breaking changes!
 

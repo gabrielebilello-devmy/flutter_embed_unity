@@ -1,4 +1,6 @@
-## 2.0.0
+## 2.0.0-dev.1
+
+UNSTABLE dev release, not for use in production. See [#74](https://github.com/learntoflutter/flutter_embed_unity/issues/74)
 
 * Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. See [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
 * Increased Android minSdk to 25 in example app, which is required for Unity 6000.3
