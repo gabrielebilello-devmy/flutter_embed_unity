@@ -1,15 +1,8 @@
-## 2.0.0-dev.2
+## 2.0.0
 
-UNSTABLE dev release, not for use in production. See [#74](https://github.com/learntoflutter/flutter_embed_unity/issues/74)
+### ⚠️ Breaking changes!
 
-* Maybe fixes [#74](https://github.com/learntoflutter/flutter_embed_unity/issues/74)
-
-
-## 2.0.0-dev.1
-
-UNSTABLE dev release, not for use in production. See [#74](https://github.com/learntoflutter/flutter_embed_unity/issues/74)
-
-### Breaking change for iOS!
+#### Migration steps for iOS
 
 Due to structural changes required to support Swift Package Manager, you now need to add UnityFramework.framework from your exported Unity-iPhone to your Runner target's list of embedded frameworks in Xcode:
 
@@ -19,15 +12,23 @@ Due to structural changes required to support Swift Package Manager, you now nee
 * In the General tab, scroll down to 'Frameworks, Libraries, and Embedded Content'
 * Click on `+` and choose Workspace -> Unity-iPhone -> UnityFramework.framework
 
+After adding UnityFramework.framework, you may encounter a build error `Cycle inside Runner; building could produce unreliable results`. To solve this, in Xcode, again select the Runner target, and go to the Build phases tab. Drag the Thin Binary build phase downwards until it is below the Embed Frameworks build phase. If this does not resolve the issue, look for any custom Run Script phases you may have added which contain variables pointing to paths in the final built product (eg $TARGET_BUILD_DIR) and move them down also.
+
 You may also need to run `flutter clean` before rebuilding your project.
 
 ### New features
 
-* Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity)
+* Support for [Swift Package Manager](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) (you can now use SPM instead of Cocoapods to install flutter_embed_unity) (thanks [@timbotimbo](https://github.com/timbotimbo)). Closes [#29](https://github.com/learntoflutter/flutter_embed_unity/issues/29)
+* Support for installing required Unity scripts as a Unity Package Manager package via Git URL (thanks [@timbotimbo](https://github.com/timbotimbo)). See [Unity docs](https://docs.unity3d.com/6000.3/Documentation/Manual/upm-ui-giturl.html):
+  * For Unity 2022.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_2022_3_project/Assets/FlutterEmbed`
+  * For Unity 6000.0 / 6000.3: `https://github.com/learntoflutter/flutter_embed_unity.git?path=example_unity_6000_0_project/Assets/FlutterEmbed`
 
-### Other
+### Other changes
 
-* Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. See [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
+* Increased minimum Flutter version to 3.35 due to problems with Unity, Xcode 26 and Flutter JIT. Fixes [#73](https://github.com/learntoflutter/flutter_embed_unity/issues/73)
+* Example Unity 6 project updated to Unity 6000.3.11f1
+* Bump all platform implementation package and platform interface dependencies to 2.0.0
+* Increased Android minSdk to 25 in example app, which is required for Unity 6000.3
 
 
 ## 1.0.2
