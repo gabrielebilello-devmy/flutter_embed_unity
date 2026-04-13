@@ -24,17 +24,18 @@ let package = Package(
             targets: ["flutter_embed_unity_2022_3_ios"])
     ],
     dependencies: [
-        // Mentioned as "new in Flutter 3.41" 
-        // .package(name: "FlutterFramework", path: "../FlutterFramework") // Flutter 3.41
+        // TODO: when we update the minimum Flutter version to 3.41+, we should uncomment this (and target dependency below)
+        // See https://github.com/learntoflutter/flutter_embed_unity/discussions/72#discussioncomment-16475482
+        // .package(name: "FlutterFramework", path: "../FlutterFramework")  // Requires Flutter 3.41+
     ],
     targets: [
         .target(
             name: "flutter_embed_unity_2022_3_ios",
             dependencies: [
                 "UnityFramework"
-
-                // Mentioned as "new in Flutter 3.41" 
-                // .product(name: "FlutterFramework", package: "FlutterFramework")
+                // TODO: when we update the minimum Flutter version to 3.41+, we should uncomment this
+                // See https://github.com/learntoflutter/flutter_embed_unity/discussions/72#discussioncomment-16475482
+                // .product(name: "FlutterFramework", package: "FlutterFramework")  // Requires Flutter 3.41+
             ],
             resources: [
                 // If your plugin requires a privacy manifest
