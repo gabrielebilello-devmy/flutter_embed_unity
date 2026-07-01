@@ -23,8 +23,15 @@ class UnityViewStack: NSObject {
     // be possible that a view which isn't the topmost one gets disposed (eg during
     // a Navigator.of(contect).pushAndRemoveUntil ?) so safest just to use a list
     private var viewStack = [UnityViewController]()
-    
-    func pushView(_ viewController: UnityViewController) {
+
+    // Whether Unity should be fully unloaded from memory (rather than just paused)
+    // when the last EmbedUnity view is removed. Controlled by the EmbedUnity widget's
+    // unloadOnDispose parameter, sent via PlatformView creation parameters.
+    private var unloadOnDispose = false
+
+    func pushView(_ viewController: UnityViewController, unloadOnDispose: Bool = false) {
+        self.unloadOnDispose = unloadOnDispose
+
         // Unity can only be attached to one view at a time. Therefore, check
         // if there are any other active views, and detatch Unity from them first
         viewStack.forEach { existingViewController in
@@ -67,7 +74,7 @@ class UnityViewStack: NSObject {
         viewController.viewDidAppear = { viewId in
             if !self.viewStack.contains(where: {$0.viewId == viewId}) {
                 NSLog("UnityViewStack: View \(viewId) has reappeared, pushing back onto stack")
-                self.pushView(viewController)
+                self.pushView(viewController, unloadOnDispose: self.unloadOnDispose)
             }
         }
         // ---------------------------------------------
@@ -97,9 +104,17 @@ class UnityViewStack: NSObject {
             unityPlayerSingleton.pause(false)
         }
         else {
-            // No more Unity views, so pause
-            NSLog("No more EmbedUnity widgets in stack, pausing Unity")
-            unityPlayerSingleton.pause(true)
+            if unloadOnDispose {
+                // No more Unity views and the widget opted in to unloading: free Unity
+                // from memory entirely (frees RAM/GPU/CPU). Unity will cold start next time.
+                NSLog("No more EmbedUnity widgets in stack, unloading Unity from memory")
+                UnityPlayerSingleton.unload()
+            }
+            else {
+                // No more Unity views, so pause (keep Unity loaded in the background)
+                NSLog("No more EmbedUnity widgets in stack, pausing Unity")
+                unityPlayerSingleton.pause(true)
+            }
         }
     }
 }

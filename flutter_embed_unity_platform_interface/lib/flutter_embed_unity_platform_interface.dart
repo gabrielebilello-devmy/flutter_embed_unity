@@ -47,4 +47,19 @@ abstract class FlutterEmbedUnityPlatform extends PlatformInterface {
   void resumeUnity() {
     throw UnimplementedError('resumeUnity() has not been implemented.');
   }
+
+  /// Unload Unity from memory to free up resources (RAM, GPU, CPU).
+  ///
+  /// Unlike [pauseUnity] (which keeps Unity loaded in the background), this releases
+  /// the Unity engine. Any in-memory Unity state is lost and the next time an
+  /// [EmbedUnity] widget is shown Unity will perform a cold start.
+  ///
+  /// Platform notes:
+  /// - iOS: performs a real unload via `UnityFramework.unloadApplication()`, which
+  ///   frees memory without terminating the app.
+  /// - Android: a true unload is not possible because `UnityPlayer.destroy()` would
+  ///   kill the host process, so this falls back to pausing Unity.
+  void unloadUnity() {
+    throw UnimplementedError('unloadUnity() has not been implemented.');
+  }
 }

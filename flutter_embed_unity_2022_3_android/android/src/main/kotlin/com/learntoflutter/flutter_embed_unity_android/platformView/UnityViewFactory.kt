@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.learntoflutter.flutter_embed_unity_android.constants.FlutterEmbedConstants
 import com.learntoflutter.flutter_embed_unity_android.constants.FlutterEmbedConstants.Companion.logTag
 import com.learntoflutter.flutter_embed_unity_android.unity.UnityPlayerSingleton
 import io.flutter.BuildConfig
 import io.flutter.Log
+import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 
 
-class UnityViewFactory : PlatformViewFactory(null) {
+// Pass StandardMessageCodec so that creationParams sent from the Dart EmbedUnity
+// widget (eg unloadOnDispose) are decoded and passed to create(...) as `args`
+class UnityViewFactory : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
 
     private val unityViewStack = UnityViewStack()
@@ -22,9 +26,13 @@ class UnityViewFactory : PlatformViewFactory(null) {
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
         Log.d(this.toString(), "UnityViewFactory creating view $viewId")
 
+        // Read creation parameters sent from the Dart EmbedUnity widget
+        val creationParams = args as? Map<*, *>
+        val unloadOnDispose = creationParams?.get(FlutterEmbedConstants.creationParamUnloadOnDispose) as? Boolean ?: false
+
         try {
             val view = UnityView(context)
-            unityViewStack.pushView(view)
+            unityViewStack.pushView(view, unloadOnDispose)
             return view
         }
         catch (e: NoClassDefFoundError) {

@@ -34,6 +34,15 @@ class SendToUnity {
                     debugPrint("Didn't resume Unity: Unity is not loaded yet")
                     result(false)
                 }
+            case FlutterEmbedConstants.methodNameUnloadUnity:
+                if(UnityPlayerSingleton.isInitialised) {
+                    UnityPlayerSingleton.unload()
+                    result(true)
+                }
+                else {
+                    debugPrint("Didn't unload Unity: Unity is not loaded yet")
+                    result(false)
+                }
             default:
               result(FlutterMethodNotImplemented)
             }

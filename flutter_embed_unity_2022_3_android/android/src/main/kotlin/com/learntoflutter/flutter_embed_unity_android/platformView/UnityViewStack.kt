@@ -20,7 +20,13 @@ class UnityViewStack {
     // a Navigator.of(contect).pushAndRemoveUntil ?) so safest just to use a list
     private val viewStack = ArrayList<IUnityViewStackable>()
 
-    fun pushView(view: IUnityViewStackable) {
+    // Whether Unity should be unloaded (rather than just paused) when the last
+    // EmbedUnity view is removed. On Android a true unload is not possible (see the
+    // comment in popView), so this only affects logging - Unity is paused either way.
+    private var unloadOnDispose = false
+
+    fun pushView(view: IUnityViewStackable, unloadOnDispose: Boolean = false) {
+        this.unloadOnDispose = unloadOnDispose
         // Unity can only be attached to one view at a time. Therefore, check
         // if there are any other active views, and detatch Unity from them first
         for(existingView in viewStack) {
@@ -47,6 +53,9 @@ class UnityViewStack {
             // TODO: FLAG_FULLSCREEN is deprecated, what to replace it with?
             // unityEngineSingleton.windowInsetsController?.show(WindowInsets.Type.statusBars()) doesn't seem to work...
             ViewUtils.getActivity(unityPlayerSingleton.context)?.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+            // Mark that Unity is attached to a visible view (see hasAttachedView)
+            UnityPlayerSingleton.hasAttachedView = true
 
             Log.i(logTag, "Attached Unity to new view")
         }
@@ -90,8 +99,17 @@ class UnityViewStack {
             }
         }
         else {
-            // No more Unity views, so pause
-            Log.i(logTag, "No more EmbedUnity views in stack, pausing Unity")
+            // No more Unity views, so pause. Note there is no attached view anymore,
+            // so we should not resume Unity on activity resume (see ResumeUnityOnActivityResume)
+            UnityPlayerSingleton.hasAttachedView = false
+            if(unloadOnDispose) {
+                Log.i(logTag, "No more EmbedUnity views in stack. Note: unloadOnDispose was " +
+                        "requested, but on Android Unity cannot be unloaded without killing the " +
+                        "app process, so Unity is paused instead.")
+            }
+            else {
+                Log.i(logTag, "No more EmbedUnity views in stack, pausing Unity")
+            }
             UnityPlayerSingleton.getInstance()?.pause()
             // DO NOT call unityPlayerCustom.destroy(). UnityPlayer will also kill the process it is
             // running in, because it was designed to be run within it's own activity launched in it's

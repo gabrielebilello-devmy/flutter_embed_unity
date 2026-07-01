@@ -1,3 +1,10 @@
+## 2.1.0
+
+* Added handling for `unloadUnity()`. On Android a true unload is not possible (it would kill the app process), so Unity is paused instead.
+* Unity is no longer resumed in the background when the app returns to the foreground while no `EmbedUnity` widget is on screen, avoiding wasted CPU/battery.
+* Read the `unloadOnDispose` creation parameter from the `EmbedUnity` widget.
+
+
 ## 2.0.0
 
 ### ⚠️ Breaking changes!

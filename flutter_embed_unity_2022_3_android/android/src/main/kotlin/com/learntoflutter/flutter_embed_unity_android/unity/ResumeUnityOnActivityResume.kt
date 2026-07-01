@@ -15,10 +15,18 @@ class ResumeUnityOnActivityResume : LifecycleEventObserver {
         //Log.d(logTag, "Detected lifecycle change $event")
 
         if (event == Lifecycle.Event.ON_RESUME) {
-            Log.d(logTag, "Activity resumed, resuming Unity")
-            // For some reason, we need to pause first, and then resume. Not sure why.
-            UnityPlayerSingleton.getInstance()?.pause()
-            UnityPlayerSingleton.getInstance()?.resume()
+            // Only resume Unity if there is actually an EmbedUnity widget on screen.
+            // Otherwise we would restart Unity's render loop in the background with no
+            // visible view, wasting CPU/battery and causing lag. When no view is
+            // attached, Unity stays paused until the next EmbedUnity widget is shown.
+            if (UnityPlayerSingleton.hasAttachedView) {
+                Log.d(logTag, "Activity resumed and a Unity view is attached, resuming Unity")
+                // For some reason, we need to pause first, and then resume. Not sure why.
+                UnityPlayerSingleton.getInstance()?.pause()
+                UnityPlayerSingleton.getInstance()?.resume()
+            } else {
+                Log.d(logTag, "Activity resumed but no Unity view is attached, leaving Unity paused")
+            }
         }
     }
 }

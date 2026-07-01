@@ -11,7 +11,19 @@ class UnityViewFactory : NSObject, FlutterPlatformViewFactory {
         super.init()
     }
 
+    // Required so that creationParams sent from the Dart EmbedUnity widget
+    // (eg unloadOnDispose) are decoded and passed to create(...) as `arguments`
+    func createArgsCodec() -> (FlutterMessageCodec & NSObjectProtocol) {
+        return FlutterStandardMessageCodec.sharedInstance()
+    }
+
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
+        // Read creation parameters sent from the Dart EmbedUnity widget
+        var unloadOnDispose = false
+        if let argsDict = args as? [String: Any],
+           let flag = argsDict[FlutterEmbedConstants.creationParamUnloadOnDispose] as? Bool {
+            unloadOnDispose = flag
+        }
         // In order to detect when the platform view is dismissed
         // (so we can detatch unity from the view and possibly
         // reattach to another view lower down in the stack)
@@ -23,7 +35,7 @@ class UnityViewFactory : NSObject, FlutterPlatformViewFactory {
         let unityViewController = UnityViewController(frame, viewId)
         let unityPlatformView = UnityPlatformView(unityViewController)
         // Push it onto the stack so we can handle multiple views
-        viewStack.pushView(unityViewController)
+        viewStack.pushView(unityViewController, unloadOnDispose: unloadOnDispose)
         return unityPlatformView
     }
 }

@@ -4,4 +4,6 @@ struct FlutterEmbedConstants {
     static let methodNameSendToFlutter = "sendToFlutter"
     static let methodNamePauseUnity = "pauseUnity"
     static let methodNameResumeUnity = "resumeUnity"
+    static let methodNameUnloadUnity = "unloadUnity"
+    static let creationParamUnloadOnDispose = "unloadOnDispose"
 }

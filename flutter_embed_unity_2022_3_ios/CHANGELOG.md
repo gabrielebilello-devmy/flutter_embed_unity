@@ -1,3 +1,8 @@
+## 2.1.0
+
+* Added a real unload of Unity from memory via `UnityFramework.unloadApplication()`, freeing resources (RAM/GPU/CPU) without terminating the app. Triggered by the `unloadUnity()` function or the `EmbedUnity(unloadOnDispose: true)` parameter. Unity performs a cold start (and loses its state) the next time it is shown.
+
+
 ## 2.0.0
 
 ### ⚠️ Breaking changes!

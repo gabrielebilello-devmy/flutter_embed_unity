@@ -11,5 +11,7 @@ class FlutterEmbedConstants {
         const val methodNameSendToFlutter = "sendToFlutter"
         const val methodNamePauseUnity = "pauseUnity"
         const val methodNameResumeUnity = "resumeUnity"
+        const val methodNameUnloadUnity = "unloadUnity"
+        const val creationParamUnloadOnDispose = "unloadOnDispose"
     }
 }

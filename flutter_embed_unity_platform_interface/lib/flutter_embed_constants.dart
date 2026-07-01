@@ -7,4 +7,8 @@ class FlutterEmbedConstants {
   static const methodNameSendToFlutter = "sendToFlutter";
   static const methodNamePauseUnity = "pauseUnity";
   static const methodNameResumeUnity = "resumeUnity";
+  static const methodNameUnloadUnity = "unloadUnity";
+  // Key used in the PlatformView creation parameters to tell native whether Unity
+  // should be unloaded from memory when the last EmbedUnity widget is disposed
+  static const creationParamUnloadOnDispose = "unloadOnDispose";
 }

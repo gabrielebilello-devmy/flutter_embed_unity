@@ -29,6 +29,13 @@ class UnityPlayerSingleton private constructor (activity: Activity) : UnityPlaye
         @SuppressLint("StaticFieldLeak")
         var flutterActivity: Activity? = null
 
+        // Whether Unity is currently attached to a visible EmbedUnity view.
+        // Used by ResumeUnityOnActivityResume to avoid resuming (and re-rendering)
+        // Unity when the app is brought to the foreground but no widget is on screen,
+        // which would otherwise waste CPU/battery and cause lag.
+        @Volatile
+        var hasAttachedView: Boolean = false
+
         fun getOrCreateInstance() : UnityPlayerSingleton? {
             singleton.let{ singleton ->
                 if(singleton != null) {
