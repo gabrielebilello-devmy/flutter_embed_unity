@@ -1,3 +1,12 @@
+## 2.1.0
+
+* Added the top level `unloadUnity()` function to free Unity from memory (RAM/GPU/CPU) rather than just pausing it.
+* Added the `EmbedUnity(unloadOnDispose:)` parameter to automatically unload Unity when the last `EmbedUnity` widget leaves the widget tree.
+  * On iOS this performs a real unload via `UnityFramework.unloadApplication()`, freeing memory without terminating the app. Unity performs a cold start (and loses its state) the next time it is shown.
+  * On Android a true unload is not possible (it would kill the app process), so unloading falls back to pausing Unity.
+* On Android, Unity is no longer resumed in the background when the app returns to the foreground while no `EmbedUnity` widget is on screen, avoiding wasted CPU/battery.
+
+
 ## 2.0.0
 
 ### ⚠️ Breaking changes!

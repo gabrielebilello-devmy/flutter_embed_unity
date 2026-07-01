@@ -179,7 +179,20 @@ Unity can only render in 1 widget at a time. Therefore, you can only use one `Em
 
 
 ## Memory usage
-Running Unity has a significant impact on memory usage, in addition to that already used by Flutter, so may not work well on low-end devices. After the first `EmbedUnity` widget is shown on screen and Unity loads, Unity will remain in memory in the background (but paused) even after the widget has been disposed. This is because embedded Unity does not support shutting down without shutting down the entire app. See [the official limitations for more details](https://docs.unity3d.com/Manual/UnityasaLibrary.html).
+Running Unity has a significant impact on memory usage, in addition to that already used by Flutter, so may not work well on low-end devices. By default, after the first `EmbedUnity` widget is shown on screen and Unity loads, Unity will remain in memory in the background (but paused) even after the widget has been disposed. This keeps resume instant and preserves Unity's state, at the cost of memory. See [the official limitations for more details](https://docs.unity3d.com/Manual/UnityasaLibrary.html).
+
+### Unloading Unity to free memory
+If you want to free up resources (RAM, GPU, CPU) when Unity is no longer shown, you have two options:
+
+- Set `EmbedUnity(unloadOnDispose: true)` to automatically unload Unity when the last `EmbedUnity` widget leaves the widget tree.
+- Call the top level `unloadUnity()` function to unload Unity on demand.
+
+Platform behaviour differs due to platform constraints:
+
+- **iOS**: performs a real unload via `UnityFramework.unloadApplication()`, which frees memory *without* terminating the app. The next time an `EmbedUnity` widget is shown, Unity performs a (slower) cold start, and any in-memory Unity state is lost.
+- **Android**: a true unload is not possible, because `UnityPlayer.destroy()` would kill the host process (Unity was designed to own its own activity/process). On Android, unloading therefore falls back to pausing Unity.
+
+On Android, this plugin also ensures Unity is not resumed in the background when the app returns to the foreground while no `EmbedUnity` widget is on screen, to avoid wasting CPU/battery.
 
 
 ## android:configChanges
@@ -700,6 +713,24 @@ ElevatedButton(
         pauseUnity();
     },
     child: const Text("Pause"),
+),
+```
+
+
+## Unloading Unity from memory
+
+If you want to free up resources rather than just pause, use the top level `unloadUnity()` function, or set `EmbedUnity(unloadOnDispose: true)` to unload automatically when the last `EmbedUnity` widget leaves the widget tree. Unlike `pauseUnity`, this releases the Unity engine, so its state is lost and the next `EmbedUnity` widget triggers a cold start. On iOS this is a real unload that frees memory; on Android it falls back to pausing (a real unload would kill the app process). See the [Memory usage](#memory-usage) section for details.
+
+```
+import 'package:flutter_embed_unity/flutter_embed_unity.dart';
+
+...
+
+ElevatedButton(
+    onPressed: () {
+        unloadUnity();
+    },
+    child: const Text("Unload"),
 ),
 ```
 

@@ -57,6 +57,10 @@ class _ExampleAppState extends State<ExampleApp> {
                 children: [
                   Expanded(
                     child: EmbedUnity(
+                      // Set unloadOnDispose: true to automatically free Unity from
+                      // memory when the last EmbedUnity widget leaves the widget tree
+                      // (real unload on iOS, pause on Android). Defaults to false.
+                      // unloadOnDispose: true,
                       onMessageFromUnity: (String data) {
                         // A message has been received from a Unity script
                         if(data == "touch"){
@@ -153,6 +157,19 @@ class _ExampleAppState extends State<ExampleApp> {
                               resumeUnity();
                             },
                             child: const Text("Resume"),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Unload Unity from memory (real unload on iOS, pause on
+                              // Android). The next EmbedUnity will trigger a cold start.
+                              unloadUnity();
+                            },
+                            child: const Text("Unload"),
                           ),
                         ),
                       ),
